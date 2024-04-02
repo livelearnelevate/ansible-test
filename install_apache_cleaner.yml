@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repo index
+    apt:
+      update_cache: Yes
+    when: anible_distribution == "Unbuntu"
+
+  - name: install apache2 php packages for Ubuntu
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: update respository index DNF compatible OS
+    dnf:
+      update_cache: yes
+    when: ansible_distribution == "Fedora Linux"
+
+  - name: install php package and Apache for DNF compaitble OS
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "Fedora Linux"
